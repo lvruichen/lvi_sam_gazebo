@@ -6,3 +6,4 @@
 # be used. For example, for a Husky with a lower gear ratio.
 # This can be used to change husky_velocity_controller/wheel_radius_multiplier
 # to account for the change in the gearbox.
+ENABLE_EKF: false
