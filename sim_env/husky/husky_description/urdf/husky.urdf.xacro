@@ -399,7 +399,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <robotNamespace>$(arg robot_namespace)</robotNamespace>
       <updateRate>40</updateRate>
       <bodyName>base_link</bodyName>
-      <frameId>base_link</frameId>
+      <frameId>map</frameId>
       <topicName>navsat/fix</topicName>
       <velocityTopicName>navsat/vel</velocityTopicName>
       <referenceLatitude>49.9</referenceLatitude>
@@ -418,7 +418,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <bodyName>base_link</bodyName>
       <topicName>ground_truth/state</topicName>
       <gaussianNoise>0.01</gaussianNoise>
-      <frameName>base_link</frameName>
+      <frameName>map</frameName>
       <xyzOffsets>0 0 0</xyzOffsets>
       <rpyOffsets>0 0 0</rpyOffsets>
     </plugin>

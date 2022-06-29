@@ -25,10 +25,10 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 -->
 <launch>
 
-  <arg name="world_name" default="worlds/empty.world"/>
+  <arg name="world_name" default="$(find husky_gazebo)/worlds/city.world"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
+    <arg name="world_name" value="$(arg world_name)"/> 
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
@@ -38,5 +38,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 
   <include file="$(find husky_gazebo)/launch/spawn_husky.launch">
   </include>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_transformer" args="0 0 0.13228 0 0 0 /map /odom"/>
+  <node pkg="husky_utility" type="fromP3dToTF" name="fromP3dToTF"/>
 
 </launch>
