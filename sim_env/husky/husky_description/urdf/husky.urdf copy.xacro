@@ -82,7 +82,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://husky_description/meshes/base_link.dae" />
+        <mesh filename="file:///$(find husky_description)/meshes/base_link.dae" />
       </geometry>
     </visual>
     <collision>
@@ -135,6 +135,162 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <gazebo reference="imu_link">
   </gazebo>
 
+
+  <!-- left link test -->
+  <link name="left_link"/>
+
+  <joint name="left_joint" type="fixed">
+    <origin xyz="0.4 0.25 0.5" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="left_link" />
+  </joint>
+
+  <!-- camera -->
+  <gazebo reference="left_link">
+    <turnGravityOff>true</turnGravityOff>
+    <sensor type="camera" name="camera1">
+      <update_rate>10</update_rate>
+      <camera name="left">
+        <horizontal_fov>2.0</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>L8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise is sampled independently per pixel on each frame.
+               That pixel's noise value is added to each of its color
+               channels, which at that point lie in the range [0,1]. -->
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+       <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>left</cameraName>
+        <imageTopicName>image</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>left_link</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- right link test -->
+  <link name="right_link"/>
+
+  <joint name="right_joint" type="fixed">
+    <origin xyz="0.4 -0.25 0.5" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="right_link" />
+  </joint>
+
+  <!-- camera -->
+  <gazebo reference="right_link">
+    <turnGravityOff>true</turnGravityOff>
+    <sensor type="camera" name="camera1">
+      <update_rate>10</update_rate>
+      <camera name="right">
+        <horizontal_fov>2.0</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>L8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise is sampled independently per pixel on each frame.
+               That pixel's noise value is added to each of its color
+               channels, which at that point lie in the range [0,1]. -->
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+       <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>right</cameraName>
+        <imageTopicName>image</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>right_link</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
+    <!-- middle link test -->
+    <link name="middle_link"/>
+
+    <joint name="middle_joint" type="fixed">
+      <origin xyz="0.4 0.0 0.5" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="middle_link" />
+    </joint>
+  
+    <!-- camera -->
+    <gazebo reference="middle_link">
+      <turnGravityOff>true</turnGravityOff>
+      <sensor type="camera" name="camera1">
+        <update_rate>10</update_rate>
+        <camera name="middle">
+          <horizontal_fov>2.0</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>300</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <!-- Noise is sampled independently per pixel on each frame.
+                 That pixel's noise value is added to each of its color
+                 channels, which at that point lie in the range [0,1]. -->
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+         <alwaysOn>true</alwaysOn>
+          <updateRate>0.0</updateRate>
+          <cameraName>middle</cameraName>
+          <imageTopicName>image</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <frameName>middle_link</frameName>
+          <hackBaseline>0.07</hackBaseline>
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+  
 
   <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
   <VLP-16 parent="base_link" name="velodyne" topic="/points_raw" hz="10" samples="440" gpu="false">
@@ -196,6 +352,17 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       </xacro:sensor_arch>
   </xacro:if>
 
+  <!-- add the intel realsense to the sensor arch if needed -->
+  <xacro:if value="$(arg realsense_enabled)">
+    <link name="realsense_mountpoint"/>
+    <joint name="realsense_mountpoint_joint" type="fixed">
+      <origin xyz="$(arg realsense_xyz)" rpy="$(arg realsense_rpy)" />
+      <parent link="$(arg realsense_mount)"/>
+      <child link="realsense_mountpoint" />
+    </joint>
+    <xacro:intel_realsense_mount prefix="camera" topic="realsense" parent_link="realsense_mountpoint"/>
+  </xacro:if>
+
   <!--
     Add the 3d laser to the sensor arch if needed
   -->
@@ -224,6 +391,22 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
       <!-- <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise> -->
       <!-- <headingDrift>0.005</headingDrift> -->
       <!-- <headingGaussianNoise>0.005</headingGaussianNoise> -->
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <updateRate>40</updateRate>
+      <bodyName>base_link</bodyName>
+      <frameId>map</frameId>
+      <topicName>navsat/fix</topicName>
+      <velocityTopicName>navsat/vel</velocityTopicName>
+      <referenceLatitude>49.9</referenceLatitude>
+      <referenceLongitude>8.9</referenceLongitude>
+      <referenceHeading>0</referenceHeading>
+      <referenceAltitude>0</referenceAltitude>
+      <drift>0.0001 0.0001 0.0001</drift>
     </plugin>
   </gazebo>
 
