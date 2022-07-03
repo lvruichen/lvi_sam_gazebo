@@ -1,0 +1,10 @@
+<launch>
+
+    <arg name="project" default="lio_sam"/>
+    
+    <!-- Parameters -->
+    <node pkg="$(arg project)" type="$(arg project)_cloudHandle" name="$(arg project)_cloudHandle" output="screen" respawn="true">
+      <remap from="lidar_points" to="points_raw"/>
+    </node>
+
+</launch>
