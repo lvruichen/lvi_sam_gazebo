@@ -1,5 +1,7 @@
 #include "lio_sam/cloud_info.h"
+#include "lio_sam/lio_samConfig.h"
 #include "lio_sam/utility.h"
+#include <dynamic_reconfigure/server.h>
 
 struct smoothness_t {
   float value;
@@ -19,6 +21,9 @@ public:
   ros::Publisher pubLaserCloudInfo;
   ros::Publisher pubCornerPoints;
   ros::Publisher pubSurfacePoints;
+
+  dynamic_reconfigure::Server<lio_sam::lio_samConfig> server;
+  dynamic_reconfigure::Server<lio_sam::lio_samConfig>::CallbackType cbType;
 
   pcl::PointCloud<PointType>::Ptr extractedCloud;
   pcl::PointCloud<PointType>::Ptr cornerCloud;
@@ -55,7 +60,17 @@ public:
     initializationValue();
   }
 
+  void callback(lio_sam::lio_samConfig &config, uint32_t level) {
+    ROS_INFO("Reconfigure Request: %f %f", config.edgeThreshold,
+             config.surfThreshold);
+    edgeThreshold = config.edgeThreshold;
+    surfThreshold = config.surfThreshold;
+  }
+
   void initializationValue() {
+    cbType = boost::bind(&FeatureExtraction::callback, this, _1, _2);
+    server.setCallback(cbType);
+
     cloudSmoothness.resize(N_SCAN * Horizon_SCAN);
 
     downSizeFilter.setLeafSize(odometrySurfLeafSize, odometrySurfLeafSize,

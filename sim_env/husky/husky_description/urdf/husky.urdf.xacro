@@ -216,7 +216,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
       <robotNamespace>$(arg robot_namespace)</robotNamespace>
       <updateRate>100.0</updateRate>
-      <bodyName>base_link</bodyName>
+      <bodyName>inertial_link</bodyName>
       <topicName>imu/data</topicName>
       <accelDrift>0.0 0.0 0.0</accelDrift>
       <accelGaussianNoise>0.0 0.0 0.0</accelGaussianNoise>

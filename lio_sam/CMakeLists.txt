@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   roscpp
   rospy
+  dynamic_reconfigure
   cv_bridge
 
   # pcl library
@@ -39,6 +40,10 @@ add_service_files(
   DIRECTORY srv
   FILES
   save_map.srv
+)
+
+generate_dynamic_reconfigure_options(
+  cfg/lio_sam.cfg
 )
 
 generate_messages(
@@ -80,6 +85,8 @@ link_directories(
   ${GTSAM_LIBRARY_DIRS}
 )
 
+
+
 # ##########
 # # Build ##
 # ##########
@@ -93,6 +100,8 @@ target_link_libraries(${PROJECT_NAME}_imageProjection ${catkin_LIBRARIES} ${PCL_
 add_executable(${PROJECT_NAME}_featureExtraction src/featureExtraction.cpp)
 add_dependencies(${PROJECT_NAME}_featureExtraction ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
 target_link_libraries(${PROJECT_NAME}_featureExtraction ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${OpenCV_LIBRARIES})
+add_dependencies(${PROJECT_NAME}_featureExtraction ${PROJECT_NAME}_gencfg)
+target_link_libraries(${PROJECT_NAME}_featureExtraction ${catkin_LIBRARIES})
 
 # Mapping Optimization
 add_executable(${PROJECT_NAME}_mapOptmization src/mapOptmization.cpp)
@@ -106,3 +115,7 @@ target_link_libraries(${PROJECT_NAME}_imuPreintegration Boost::timer ${catkin_LI
 
 add_executable(${PROJECT_NAME}_cloudHandle src/cloudHandle.cpp)
 target_link_libraries(${PROJECT_NAME}_cloudHandle ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+
+add_executable(dynamic_reconfigure_node src/server.cpp)
+add_dependencies(dynamic_reconfigure_node ${PROJECT_NAME}_gencfg)
+target_link_libraries(dynamic_reconfigure_node ${catkin_LIBRARIES})
