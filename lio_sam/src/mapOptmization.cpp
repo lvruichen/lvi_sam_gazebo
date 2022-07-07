@@ -1059,8 +1059,10 @@ public:
     laserCloudSurfFromMapDSNum = laserCloudSurfFromMapDS->size();
 
     // clear map cache if too large
-    if (laserCloudMapContainer.size() > 1000)
+    if (laserCloudMapContainer.size() > 1000) {
       laserCloudMapContainer.clear();
+      cout << "laserCloudMapContainer has cleared" << endl;
+    }
   }
 
   void extractSurroundingKeyFrames() {
@@ -1449,6 +1451,7 @@ public:
 
     if (laserCloudCornerLastDSNum > edgeFeatureMinValidNum &&
         laserCloudSurfLastDSNum > surfFeatureMinValidNum) {
+      //  所有的kdtree内的特征点都已经转移到了map坐标系下
       kdtreeCornerFromMap->setInputCloud(laserCloudCornerFromMapDS);
       kdtreeSurfFromMap->setInputCloud(laserCloudSurfFromMapDS);
 
