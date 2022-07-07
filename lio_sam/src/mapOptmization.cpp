@@ -326,11 +326,11 @@ public:
 
       extractSurroundingKeyFrames();
 
-      downsampleCurrentScan();
+      downsampleCurrentScan(); //第一次会运行
 
       scan2MapOptimization();
 
-      saveKeyFramesAndFactor();
+      saveKeyFramesAndFactor(); // 第一次会运行
 
       correctPoses();
 
@@ -1002,6 +1002,8 @@ public:
       kdtreeSurroundingKeyPoses->nearestKSearch(pt, 1, pointSearchInd,
                                                 pointSearchSqDis);
       pt.intensity = cloudKeyPoses3D->points[pointSearchInd[0]].intensity;
+      // the intensity save the nearest key pose to this pose since using voxel
+      // filter
     }
 
     // also extract some latest key frames in case the robot rotates in one
@@ -1664,7 +1666,7 @@ public:
       return;
 
     // odom factor
-    addOdomFactor();
+    addOdomFactor(); // add the pose to the gtsam graph
 
     // gps factor
     addGPSFactor();
